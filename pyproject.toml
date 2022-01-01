@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "diceroller"
+version = "0.1.0"
+description = "A DnD Dice Roller CLI"
+authors = ["Tim Enders <enders.tim@gmail.com>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "3.10"
+click = "^8.0.3"
+setuptools = "^60.2.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+roll = "diceroller:roll"

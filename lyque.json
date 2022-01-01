@@ -1,0 +1,17 @@
+{
+    "class": "dexterity",
+    "dexterity": 3,
+    "strength": 2,
+    "constitution": 1,
+    "intelligence": 1,
+    "wisdom": 2,
+    "charisma": 0,
+    "save": {
+        "dexterity": 7,
+        "strength": 6,
+        "constitution": 1,
+        "intelligence": 1,
+        "wisdom": 2,
+        "charisma": 0
+    }
+}
