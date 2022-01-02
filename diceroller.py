@@ -7,8 +7,9 @@ import json
 @click.option("-n", "--num-dice", default=1)
 @click.option("-c", "--check")
 @click.option("-s", "--save")
+@click.option("-k", "--skill")
 @click.option("--char", default="lyque")
-def roll(dice_type, num_dice, check, save, char):
+def roll(dice_type, num_dice, check, save, char, skill):
     with open(f"{char}.json", "r") as inf:
         data = json.load(inf)
         # print(data)
@@ -26,19 +27,13 @@ def roll(dice_type, num_dice, check, save, char):
             click.echo(roll_val + mod_val)
         except KeyError:
             click.echo(f"No {save} found on character")
-    elif not check and not save:
-        click.echo("Initiative Roll!!!")
+    elif skill:
         roll_val = d20()
-        mod_att = data.get("class", None)
-        if not mod_att:
-            print("Class attribute not set!")
-        else:
-            try:
-                mod_val = data[mod_att]
-                click.echo(roll_val + mod_val)
-            except KeyError:
-                click.echo(f"No {mod_att} found on character")
-    
+        try:
+            mod_val = int(data["skill"][skill])
+            click.echo(roll_val + mod_val)
+        except KeyError:
+            click.echo(f"No {skill} found on character")
     elif dice_type == "d4":
         for x in range(0, num_dice):
             click.echo(d4())
@@ -61,7 +56,17 @@ def roll(dice_type, num_dice, check, save, char):
         for x in range(0, num_dice):
             click.echo(d100())
     else:
-        click.echo("Dice Type not found! Try Again")
+        click.echo("Initiative Roll!!!")
+        roll_val = d20()
+        mod_att = data.get("class", None)
+        if not mod_att:
+            print("Class attribute not set!")
+        else:
+            try:
+                mod_val = data[mod_att]
+                click.echo(roll_val + mod_val)
+            except KeyError:
+                click.echo(f"No {mod_att} found on character")
 
 
 def d4():

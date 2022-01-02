@@ -13,5 +13,25 @@
         "intelligence": 1,
         "wisdom": 2,
         "charisma": 0
+    },
+    "skill": {
+        "acrobatics": 3,
+        "animal-handling": 6,
+        "arcana": 1,
+        "athletics": 6,
+        "deception": 0,
+        "history": 1,
+        "insight": 2,
+        "intimidation": 0,
+        "investigation": 5,
+        "medicine": 4,
+        "nature": 5,
+        "perception": 2,
+        "performance": 0,
+        "persuasion": 0,
+        "religion": 1,
+        "sleight-of-hand": 3,
+        "stealth": 7,
+        "survival": 6
     }
 }
