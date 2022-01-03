@@ -3,7 +3,7 @@ import random
 import json
 
 @click.command()
-@click.option("-d", "--dice-type", default="d20")
+@click.option("-d", "--dice-type")
 @click.option("-n", "--num-dice", default=1)
 @click.option("-c", "--check")
 @click.option("-s", "--save")
