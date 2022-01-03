@@ -4,13 +4,12 @@ import json
 
 @click.command()
 @click.option("-d", "--dice-type")
-@click.option("-n", "--num-dice", default=1)
 @click.option("-c", "--check")
 @click.option("-s", "--save")
 @click.option("-k", "--skill")
 @click.option("-e", "--equipment")
 @click.option("--char", default="lyque")
-def roll(dice_type, num_dice, check, save, char, skill, equipment):
+def roll(dice_type, check, save, char, skill, equipment):
     with open(f"{char}.json", "r") as inf:
         data = json.load(inf)
         # print(data)
@@ -44,11 +43,14 @@ def roll(dice_type, num_dice, check, save, char, skill, equipment):
                 click.echo("CRIT")
             hit_mod = obj["hit"]
             click.echo(f"Hit: {hit_roll + hit_mod}")
+            dmg_roll = multi_roll(obj["dmg_dice"])
+            dmg_mod = obj["dmg_mod"]
+            click.echo(f"Damage: {sum(dmg_roll) + dmg_mod}")
         except KeyError:
             click.echo(f"{equipment} not found in your equipment!")
     elif dice_type:
-        for x in range(0, num_dice):
-            click.echo(DICE_MAP[dice_type]())
+        rolled_dice = multi_roll(dice_type)
+        click.echo(sum(rolled_dice))
     else:
         click.echo("Initiative Roll!!!")
         roll_val = d20()
@@ -61,6 +63,14 @@ def roll(dice_type, num_dice, check, save, char, skill, equipment):
                 click.echo(roll_val + mod_val)
             except KeyError:
                 click.echo(f"No {mod_att} found on character")
+
+
+def multi_roll(dice_type):
+    rolled_dice = []
+    num_dice, dtype = dice_type.split("d")
+    for x in range(0, int(num_dice)):
+        rolled_dice.append(DICE_MAP[dtype]())
+    return rolled_dice
 
 
 def d4():
@@ -91,11 +101,11 @@ def d100():
     return random.randint(1,100)
 
 DICE_MAP = {
-    "d4": d4,
-    "d6": d6,
-    "d8": d8,
-    "d10": d10,
-    "d12": d12,
-    "d20": d20,
-    "d100": d100
+    "4": d4,
+    "6": d6,
+    "8": d8,
+    "10": d10,
+    "12": d12,
+    "20": d20,
+    "100": d100
 }
