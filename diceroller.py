@@ -14,21 +14,21 @@ def roll(dice_type, check, save, char, skill, equipment):
         data = json.load(inf)
         # print(data)
     if check:
-        roll_val = d20()
+        roll_val = dx(20)
         try:
             mod_val = int(data[check])
             click.echo(roll_val + mod_val)
         except KeyError:
             click.echo(f"No {check} found on character")
     elif save:
-        roll_val = d20()
+        roll_val = dx(20)
         try:
             mod_val = int(data["save"][save])
             click.echo(roll_val + mod_val)
         except KeyError:
             click.echo(f"No {save} found on character")
     elif skill:
-        roll_val = d20()
+        roll_val = dx(20)
         try:
             mod_val = int(data["skill"][skill])
             click.echo(roll_val + mod_val)
@@ -37,7 +37,7 @@ def roll(dice_type, check, save, char, skill, equipment):
     elif equipment:
         try:
             obj = data["equipment"][equipment]
-            hit_roll = d20()
+            hit_roll = dx(20)
             hit_mod = obj["hit"]
             click.echo(f"Hit: {hit_roll + hit_mod}")
             dmg_roll = multi_roll(obj["dmg_dice"])
@@ -55,7 +55,7 @@ def roll(dice_type, check, save, char, skill, equipment):
         click.echo(sum(rolled_dice))
     else:
         click.echo("Initiative Roll!!!")
-        roll_val = d20()
+        roll_val = dx(20)
         mod_att = data.get("class", None)
         if not mod_att:
             click.echo("Class attribute not set!")
@@ -71,43 +71,9 @@ def multi_roll(dice_type):
     rolled_dice = []
     num_dice, dtype = dice_type.split("d")
     for x in range(0, int(num_dice)):
-        rolled_dice.append(DICE_MAP[dtype]())
+        rolled_dice.append(dx(int(dtype)))
     return rolled_dice
 
 
-def d4():
-    return random.randint(1,4)
-
-
-def d6():
-    return random.randint(1,6)
-
-
-def d8():
-    return random.randint(1,8)
-
-
-def d10():
-    return random.randint(1,10)
-
-
-def d12():
-    return random.randint(1,12)
-
-
-def d20():
-    return random.randint(1,20)
-
-
-def d100():
-    return random.randint(1,100)
-
-DICE_MAP = {
-    "4": d4,
-    "6": d6,
-    "8": d8,
-    "10": d10,
-    "12": d12,
-    "20": d20,
-    "100": d100
-}
+def dx(num_sides):
+    return random.randint(1, num_sides)
