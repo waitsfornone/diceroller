@@ -46,28 +46,9 @@ def roll(dice_type, num_dice, check, save, char, skill, equipment):
             click.echo(f"Hit: {hit_roll + hit_mod}")
         except KeyError:
             click.echo(f"{equipment} not found in your equipment!")
-    elif dice_type == "d4":
+    elif dice_type:
         for x in range(0, num_dice):
-            click.echo(d4())
-    elif dice_type == "d6":
-        for x in range(0, num_dice):
-            click.echo(d6())
-    elif dice_type == "d8":
-        for x in range(0, num_dice):
-            click.echo(d8())
-    elif dice_type == "d10":
-        for x in range(0, num_dice):
-            click.echo(d10())
-    elif dice_type == "d12":
-        for x in range(0, num_dice):
-            click.echo(d12())
-    elif dice_type == "d20":
-        for x in range(0, num_dice):
-            click.echo(d20())
-    elif dice_type == "d100":
-        for x in range(0, num_dice):
-            click.echo(d100())
-   
+            click.echo(DICE_MAP[dice_type]())
     else:
         click.echo("Initiative Roll!!!")
         roll_val = d20()
@@ -108,3 +89,13 @@ def d20():
 
 def d100():
     return random.randint(1,100)
+
+DICE_MAP = {
+    "d4": d4,
+    "d6": d6,
+    "d8": d8,
+    "d10": d10,
+    "d12": d12,
+    "d20": d20,
+    "d100": d100
+}
