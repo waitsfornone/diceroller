@@ -37,15 +37,17 @@ def roll(dice_type, check, save, char, skill, equipment):
     elif equipment:
         try:
             obj = data["equipment"][equipment]
-            click.echo(obj)
             hit_roll = d20()
-            if hit_roll == 20:
-                click.echo("CRIT")
             hit_mod = obj["hit"]
             click.echo(f"Hit: {hit_roll + hit_mod}")
             dmg_roll = multi_roll(obj["dmg_dice"])
             dmg_mod = obj["dmg_mod"]
-            click.echo(f"Damage: {sum(dmg_roll) + dmg_mod}")
+            if hit_roll == 20:
+                click.echo("CRIT")
+                dmg_roll2 = multi_roll(obj["dmg_dice"])
+                click.echo(f"Damage: {sum(dmg_roll) + dmg_mod + sum(dmg_roll2)}")
+            else:
+                click.echo(f"Damage: {sum(dmg_roll) + dmg_mod}")
         except KeyError:
             click.echo(f"{equipment} not found in your equipment!")
     elif dice_type:
