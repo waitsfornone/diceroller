@@ -36,9 +36,9 @@ def roll(dice_type, num_dice, check, save, char, skill, equipment):
         except KeyError:
             click.echo(f"No {skill} found on character")
     elif equipment:
-        print(equipment)
         try:
             obj = data["equipment"][equipment]
+            click.echo(obj)
             hit_roll = d20()
             if hit_roll == 20:
                 click.echo("CRIT")
