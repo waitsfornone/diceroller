@@ -8,8 +8,9 @@ import json
 @click.option("-c", "--check")
 @click.option("-s", "--save")
 @click.option("-k", "--skill")
+@click.option("-e", "--equipment")
 @click.option("--char", default="lyque")
-def roll(dice_type, num_dice, check, save, char, skill):
+def roll(dice_type, num_dice, check, save, char, skill, equipment):
     with open(f"{char}.json", "r") as inf:
         data = json.load(inf)
         # print(data)
@@ -34,6 +35,17 @@ def roll(dice_type, num_dice, check, save, char, skill):
             click.echo(roll_val + mod_val)
         except KeyError:
             click.echo(f"No {skill} found on character")
+    elif equipment:
+        print(equipment)
+        try:
+            obj = data["equipment"][equipment]
+            hit_roll = d20()
+            if hit_roll == 20:
+                click.echo("CRIT")
+            hit_mod = obj["hit"]
+            click.echo(f"Hit: {hit_roll + hit_mod}")
+        except KeyError:
+            click.echo(f"{equipment} not found in your equipment!")
     elif dice_type == "d4":
         for x in range(0, num_dice):
             click.echo(d4())
@@ -55,12 +67,13 @@ def roll(dice_type, num_dice, check, save, char, skill):
     elif dice_type == "d100":
         for x in range(0, num_dice):
             click.echo(d100())
+   
     else:
         click.echo("Initiative Roll!!!")
         roll_val = d20()
         mod_att = data.get("class", None)
         if not mod_att:
-            print("Class attribute not set!")
+            click.echo("Class attribute not set!")
         else:
             try:
                 mod_val = data[mod_att]

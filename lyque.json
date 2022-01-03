@@ -33,5 +33,32 @@
         "sleight-of-hand": 3,
         "stealth": 7,
         "survival": 6
+    },
+    "equipment": {
+        "longbow": {
+            "hit": 10,
+            "dmg_dice": "1d8",
+            "dmg_mod": 8
+        },
+        "dagger": {
+            "hit": 8,
+            "dmg_dice": "1d4",
+            "dmg_mod": 4
+        },
+        "greatsword": {
+            "hit": 9,
+            "dmg_dice": "2d6",
+            "dmg_mod": 5
+        },
+        "handaxe": {
+            "hit": 6,
+            "dmg_dice": "1d6",
+            "dmg_mod": 2
+        },
+        "unarmed": {
+            "hit": 8,
+            "dmg_dice": "None",
+            "dmg_mod": 3
+        }
     }
 }
