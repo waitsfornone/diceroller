@@ -18,16 +18,20 @@ def roll(dice_type, check, save, char, skill, equipment):
             click.echo(dx(20) + int(data[check]))
         except KeyError:
             click.echo(f"No {check} found on character")
+            click.echo(f"Top level are your checks.")
+            click.echo(data.keys())
     elif save:
         try:
             click.echo(dx(20) + int(data["save"][save]))
         except KeyError:
             click.echo(f"No {save} found on character")
+            click.echo(f"Saves on character: {data['save'].keys()}")
     elif skill:
         try:
             click.echo(dx(20) + int(data["skill"][skill]))
         except KeyError:
             click.echo(f"No {skill} found on character")
+            click.echo(f"Skills on character: {data['skill'].keys()}")
     elif equipment:
         try:
             obj = data["equipment"][equipment]
@@ -42,6 +46,7 @@ def roll(dice_type, check, save, char, skill, equipment):
                 click.echo(f"Damage: {sum(dmg_roll) + obj['dmg_mod']}")
         except KeyError:
             click.echo(f"{equipment} not found in your equipment!")
+            click.echo(f"Equipment on character: {data['equipment'].keys()}")
     elif dice_type:
         click.echo(sum(multi_roll(dice_type)))
     else:
