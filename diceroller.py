@@ -1,6 +1,7 @@
 import click
 import random
 import json
+import sys
 
 @click.command()
 @click.option("-d", "--dice-type")
@@ -14,24 +15,28 @@ def roll(dice_type, check, save, char, skill, equipment):
         data = json.load(inf)
         # print(data)
     if check:
+        if check in ["save", "skill", "equipment"]:
+            click.echo("This is not the command you are looking for!")
+            click.echo("See roll --help for more details")
+            sys.exit(1)
         try:
             click.echo(dx(20) + int(data[check]))
         except KeyError:
             click.echo(f"No {check} found on character")
             click.echo(f"Top level are your checks.")
-            click.echo(data.keys())
+            click.echo(list(data.keys()))
     elif save:
         try:
             click.echo(dx(20) + int(data["save"][save]))
         except KeyError:
             click.echo(f"No {save} found on character")
-            click.echo(f"Saves on character: {data['save'].keys()}")
+            click.echo(f"Saves on character: {list(data['save'].keys())}")
     elif skill:
         try:
             click.echo(dx(20) + int(data["skill"][skill]))
         except KeyError:
             click.echo(f"No {skill} found on character")
-            click.echo(f"Skills on character: {data['skill'].keys()}")
+            click.echo(f"Skills on character: {list(data['skill'].keys())}")
     elif equipment:
         try:
             obj = data["equipment"][equipment]
