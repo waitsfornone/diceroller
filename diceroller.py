@@ -4,13 +4,15 @@ import json
 import sys
 
 @click.command()
+@click.option("-a", "--advantage", is_flag=True)
+@click.option("-v", "--disadvantage", is_flag=True)
 @click.option("-d", "--dice-type")
 @click.option("-c", "--check")
 @click.option("-s", "--save")
 @click.option("-k", "--skill")
 @click.option("-e", "--equipment")
 @click.option("--char", default="lyque")
-def roll(dice_type, check, save, char, skill, equipment):
+def roll(dice_type, check, save, char, skill, equipment, advantage, disadvantage):
     with open(f"{char}.json", "r") as inf:
         data = json.load(inf)
         # print(data)
@@ -20,27 +22,27 @@ def roll(dice_type, check, save, char, skill, equipment):
             click.echo("See roll --help for more details")
             sys.exit(1)
         try:
-            click.echo(dx(20) + int(data[check]))
+            click.echo(dx(20, advantage, disadvantage) + int(data[check]))
         except KeyError:
             click.echo(f"No {check} found on character")
             click.echo(f"Top level are your checks.")
             click.echo(list(data.keys()))
     elif save:
         try:
-            click.echo(dx(20) + int(data["save"][save]))
+            click.echo(dx(20, advantage, disadvantage) + int(data["save"][save]))
         except KeyError:
             click.echo(f"No {save} found on character")
             click.echo(f"Saves on character: {list(data['save'].keys())}")
     elif skill:
         try:
-            click.echo(dx(20) + int(data["skill"][skill]))
+            click.echo(dx(20, advantage, disadvantage) + int(data["skill"][skill]))
         except KeyError:
             click.echo(f"No {skill} found on character")
             click.echo(f"Skills on character: {list(data['skill'].keys())}")
     elif equipment:
         try:
             obj = data["equipment"][equipment]
-            hit_roll = dx(20)
+            hit_roll = dx(20, advantage, disadvantage)
             click.echo(f"Hit: {hit_roll + int(obj['hit'])}")
             dmg_roll = multi_roll(obj["dmg_dice"])
             if hit_roll == 20:
@@ -61,7 +63,8 @@ def roll(dice_type, check, save, char, skill, equipment):
             click.echo("Class attribute not set!")
         else:
             try:
-                click.echo(dx(20) + data[mod_att])
+                #need to see if Initiative is adv/disadv
+                click.echo(dx(20, advantage, disadvantage) + data[mod_att])
             except KeyError:
                 click.echo(f"No {mod_att} found on character")
 
@@ -74,5 +77,20 @@ def multi_roll(dice_type):
     return rolled_dice
 
 
-def dx(num_sides):
-    return random.randint(1, num_sides)
+def dx(num_sides, advantage=False, disadvantage=False):
+    roll1 = random.randint(1, num_sides)
+    roll2 = random.randint(1, num_sides)
+    if advantage and disadvantage:
+        click.echo("Error! You can't have both advantage and disadvantage!")
+    elif advantage:
+        if roll1 > roll2:
+            return roll1
+        else:
+            return roll2
+    elif disadvantage:
+        if roll1 > roll2:
+            return roll2
+        else:
+            return roll1
+    else:
+        return roll1
