@@ -11,8 +11,9 @@ import sys
 @click.option("-s", "--save")
 @click.option("-k", "--skill")
 @click.option("-e", "--equipment")
+@click.option("-b", "--bless", is_flag=True)
 @click.option("--char", default="lyque")
-def roll(dice_type, check, save, char, skill, equipment, advantage, disadvantage):
+def roll(dice_type, check, save, char, skill, equipment, advantage, disadvantage, bless):
     with open(f"{char}.json", "r") as inf:
         data = json.load(inf)
         # print(data)
@@ -28,8 +29,13 @@ def roll(dice_type, check, save, char, skill, equipment, advantage, disadvantage
             click.echo(f"Top level are your checks.")
             click.echo(list(data.keys()))
     elif save:
+        # gets bless
         try:
-            click.echo(dx(20, advantage, disadvantage) + int(data["save"][save]))
+            save_roll = dx(20, advantage, disadvantage)
+            if bless:
+                bless_roll = dx(4)
+                save_roll += bless_roll
+            click.echo(save_roll + int(data["save"][save]))
         except KeyError:
             click.echo(f"No {save} found on character")
             click.echo(f"Saves on character: {list(data['save'].keys())}")
@@ -43,12 +49,17 @@ def roll(dice_type, check, save, char, skill, equipment, advantage, disadvantage
         try:
             obj = data["equipment"][equipment]
             hit_roll = dx(20, advantage, disadvantage)
+            if bless:
+                bless_roll = dx(4)
+                hit_roll += bless_roll
             click.echo(f"Hit: {hit_roll + int(obj['hit'])}")
             dmg_roll = multi_roll(obj["dmg_dice"])
             if hit_roll == 20:
                 click.echo("CRIT")
                 dmg_roll2 = multi_roll(obj["dmg_dice"])
                 click.echo(f"Damage: {sum(dmg_roll) + obj['dmg_mod'] + sum(dmg_roll2)}")
+            elif hit_roll == 1:
+                click.echo("NATURAL 1, YOU MISS!")
             else:
                 click.echo(f"Damage: {sum(dmg_roll) + obj['dmg_mod']}")
         except KeyError:
