@@ -6,7 +6,7 @@ import sys
 @click.command()
 @click.option("-a", "--advantage", is_flag=True)
 @click.option("-v", "--disadvantage", is_flag=True)
-@click.option("-d", "--dice-type")
+@click.option("-d", "--dice_type")
 @click.option("-c", "--check")
 @click.option("-s", "--save")
 @click.option("-k", "--skill")
