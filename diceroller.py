@@ -5,14 +5,14 @@ import sys
 
 @click.command()
 @click.option("-a", "--advantage", is_flag=True)
-@click.option("-v", "--disadvantage", is_flag=True)
-@click.option("-d", "--dice_type")
+@click.option("-d", "--disadvantage", is_flag=True)
 @click.option("-c", "--check")
 @click.option("-s", "--save")
 @click.option("-k", "--skill")
 @click.option("-e", "--equipment")
 @click.option("-b", "--bless", is_flag=True)
 @click.option("--char", default="lyque")
+@click.argument("dice_type", nargs=-1)
 def roll(dice_type, check, save, char, skill, equipment, advantage, disadvantage, bless):
     with open(f"{char}.json", "r") as inf:
         data = json.load(inf)
@@ -66,7 +66,9 @@ def roll(dice_type, check, save, char, skill, equipment, advantage, disadvantage
             click.echo(f"{equipment} not found in your equipment!")
             click.echo(f"Equipment on character: {data['equipment'].keys()}")
     elif dice_type:
-        click.echo(sum(multi_roll(dice_type)))
+        # dice_type is now a tuple to make it an optional argument
+        # this takes the actual string out of the tuple by index
+        click.echo(sum(multi_roll(dice_type[0])))
     else:
         click.echo("Initiative Roll!!!")
         mod_att = data.get("class", None)
@@ -81,6 +83,7 @@ def roll(dice_type, check, save, char, skill, equipment, advantage, disadvantage
 
 
 def multi_roll(dice_type):
+    pass
     rolled_dice = []
     num_dice, dtype = dice_type.split("d")
     for x in range(0, int(num_dice)):
