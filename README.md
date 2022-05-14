@@ -8,17 +8,17 @@ Included is a sample character sheet that you can use as a template for your own
 Download/Clone the repo and run `poetry install`
 
 ## Rolling Dice
-Roll Initiative! `poetry run roll`
+Roll Initiative! `poetry run roll initiative`
 
 ## Commands
-Roll any dice -> -d, --dice-type TEXT `roll -d 1d12`
+Roll any dice -> `roll dice 1d12` `roll dice 4d20` `roll dice 234d52342` (Yes, this technically works!)
 
-Roll a check roll -> -c, --check TEXT `roll -c strength`
+Roll a check roll -> `roll check strength`
 
-Roll a save roll -> -s, --save TEXT `roll -s wisdom`
+Roll a save roll -> `roll save wisdom`
 
-Roll a skill check -> -k, --skill TEXT `roll -k stealth`
+Roll a skill check -> `roll skill stealth`
 
-Roll hit and damage rolls for equipped gear (or spells) -> -e, --equipment TEXT `roll -e longbow`
+Roll hit and damage rolls for equipped gear (or spells) -> `roll equip longbow`
 
-Roll for a specific character -> --char TEXT `roll -e longbow --char lyque`
+Roll for a specific character -> `roll --char lyque equip longbow`
