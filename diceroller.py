@@ -44,8 +44,9 @@ def dice(dice_type):
 
 
 @roll.command()
+@click.pass_context
 @click.argument("check")
-def check(check):
+def check(ctx, check):
     with open(f"lyque.json", "r") as inf:
         data = json.load(inf)
     if check in ["save", "skill", "equipment"]:
@@ -53,7 +54,7 @@ def check(check):
         click.echo("See roll --help for more details")
         sys.exit(1)
     try:
-        click.echo(dx(20, advantage, disadvantage) + int(data[check]))
+        click.echo(dx(20, ctx.obj["advantage"], ctx.obj["disadvantage"]) + int(data[check]))
     except KeyError:
         click.echo(f"No {check} found on character")
         click.echo(f"Top level are your checks.")
