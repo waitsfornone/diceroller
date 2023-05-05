@@ -2,6 +2,7 @@ import click
 import random
 import json
 import sys
+from rich import print
 
 @click.group(invoke_without_command=True)
 @click.option("-a", "--advantage", is_flag=True)
@@ -25,16 +26,16 @@ def roll(ctx, char, advantage, disadvantage, bless):
 @click.pass_context
 def initiative(ctx):
     data = ctx.obj["CHARACTER"]
-    click.echo("Initiative Roll!!!")
+    print("[italic bold yellow]Initiative Roll!!![/]")
     mod_att = data.get("class", None)
     if not mod_att:
-        click.echo("Class attribute not set!")
+        print("[red]Class attribute not set![/]")
     else:
         try:
             #need to see if Initiative is adv/disadv
-            click.echo(dx(20, ctx.obj["advantage"], ctx.obj["disadvantage"]) + data[mod_att])
+            print(f"[grey]{dx(20, ctx.obj['advantage'], ctx.obj['disadvantage']) + data[mod_att]}[/]")
         except KeyError:
-            click.echo(f"No {mod_att} found on character")
+            print(f"[red]No {mod_att} found on character[/]")
 
 
 @roll.command()
