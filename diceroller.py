@@ -26,7 +26,7 @@ def roll(ctx, char, advantage, disadvantage, bless):
 @click.pass_context
 def initiative(ctx):
     data = ctx.obj["CHARACTER"]
-    print("[italic bold yellow]Initiative Roll!!![/]")
+    print(":game_die: [italic bold yellow]Initiative Roll!!![/]")
     mod_att = data.get("class", None)
     if not mod_att:
         print("[red]Class attribute not set![/]")
@@ -104,11 +104,11 @@ def equip(ctx, equipment):
         click.echo(f"Hit: {hit_roll + int(obj['hit'])}")
         dmg_roll = multi_roll(obj["dmg_dice"])
         if hit_roll == 20:
-            click.echo("CRIT")
+            print(":siren: [bold green]CRITICAL ROLL!!!!![/] :siren:")
             dmg_roll2 = multi_roll(obj["dmg_dice"])
             click.echo(f"Damage: {sum(dmg_roll) + obj['dmg_mod'] + sum(dmg_roll2)}")
         elif hit_roll == 1:
-            click.echo("NATURAL 1, YOU MISS!")
+            print(":poop: [italic bold red]NATURAL 1, YOU MISS![/] :poop:")
         else:
             click.echo(f"Damage: {sum(dmg_roll) + obj['dmg_mod']}")
     except KeyError:
@@ -129,7 +129,7 @@ def dx(num_sides, advantage=False, disadvantage=False):
     roll1 = random.randint(1, num_sides)
     roll2 = random.randint(1, num_sides)
     if advantage and disadvantage:
-        click.echo("Error! You can't have both advantage and disadvantage!")
+        print(":alert: Error! You can't have both advantage and disadvantage!, :alert:")
     elif advantage:
         if roll1 > roll2:
             return roll1
