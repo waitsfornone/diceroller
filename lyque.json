@@ -1,65 +1,65 @@
 {
-    "level": 11,
+    "level": 13,
     "class": "dexterity",
-    "dexterity": 3,
-    "strength": 2,
+    "dexterity": 4,
+    "strength": 3,
     "constitution": 1,
     "intelligence": 1,
-    "wisdom": 2,
+    "wisdom": 1,
     "charisma": 0,
     "save": {
-        "dexterity": 7,
-        "strength": 6,
+        "dexterity": 9,
+        "strength": 8,
         "constitution": 1,
         "intelligence": 1,
         "wisdom": 2,
         "charisma": 0
     },
     "skill": {
-        "acrobatics": 3,
+        "acrobatics": 4,
         "animal-handling": 6,
         "arcana": 1,
-        "athletics": 6,
+        "athletics": 8,
         "deception": 0,
         "history": 1,
-        "insight": 2,
+        "insight": 1,
         "intimidation": 0,
-        "investigation": 5,
+        "investigation": 6,
         "medicine": 4,
-        "nature": 5,
-        "perception": 2,
+        "nature": 6,
+        "perception": 6,
         "performance": 0,
         "persuasion": 0,
         "religion": 1,
-        "sleight-of-hand": 3,
-        "stealth": 7,
+        "sleight-of-hand": 4,
+        "stealth": 9,
         "survival": 6
     },
     "equipment": {
         "longbow": {
-            "hit": 10,
+            "hit": 11,
             "dmg_dice": "1d8",
-            "dmg_mod": 8
+            "dmg_mod": 6
         },
         "dagger": {
-            "hit": 8,
+            "hit": 10,
             "dmg_dice": "1d4",
-            "dmg_mod": 4
-        },
-        "greatsword": {
-            "hit": 9,
-            "dmg_dice": "2d6",
             "dmg_mod": 5
         },
+        "greatsword": {
+            "hit": 11,
+            "dmg_dice": "2d6",
+            "dmg_mod": 6
+        },
         "handaxe": {
-            "hit": 6,
+            "hit": 8,
             "dmg_dice": "1d6",
-            "dmg_mod": 2
+            "dmg_mod": 3
         },
         "unarmed": {
             "hit": 8,
             "dmg_dice": "None",
-            "dmg_mod": 3
+            "dmg_mod": 4
         }
     }
 }
