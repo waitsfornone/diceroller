@@ -1,8 +1,14 @@
-import click
 import random
 import json
 import sys
-from rich import print
+import typer
+
+
+app = typer.Typer()
+
+
+
+
 
 @click.group(invoke_without_command=True)
 @click.option("-a", "--advantage", is_flag=True)
