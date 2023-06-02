@@ -36,7 +36,7 @@
         "survival": 6
     },
     "equipment": {
-        "longbow": {
+        "oathbow": {
             "hit": 11,
             "dmg_dice": "1d8",
             "dmg_mod": 6
